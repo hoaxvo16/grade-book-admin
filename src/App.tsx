@@ -1,7 +1,8 @@
+import { Authentication } from 'pages';
 import 'shared/styles/index.css';
 
 function App() {
-   return <div className="App"></div>;
+   return <Authentication />;
 }
 
 export default App;
