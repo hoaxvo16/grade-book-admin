@@ -19,7 +19,7 @@ export const Login = () => {
             autoComplete="current-password"
          />
          <br />
-         <Button style={{ width: 250 }} variant="contained">
+         <Button style={{ width: 250 }} color="primary" variant="contained">
             DANG NHAP
          </Button>
       </div>
