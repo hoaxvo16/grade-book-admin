@@ -39,7 +39,7 @@ export const Login = ({ onLogin }: IProps) => {
             color="primary"
             variant="contained"
          >
-            DANG NHAP
+            ĐĂNG NHẬP
          </Button>
       </div>
    );

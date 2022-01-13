@@ -1,5 +1,7 @@
+import { AlertColor } from '@mui/material';
 import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
+import { FeedBack, Loading } from 'shared/components';
 import { ClassDetailInfo } from 'shared/models';
 import { fullWidthFlex } from 'shared/styles';
 import { classListViewModel } from './class-list-view-model';
@@ -14,9 +16,29 @@ export const ClassList = () => {
       numberPerPage: 100,
    });
 
-   const onView = (params: GridRenderCellParams) => {
-      setSelectedClass(classListViewModel.classList[params.row.id]);
-      setShowDetail(true);
+   const [feedBackProps, setFeedBackProps] = useState<{
+      open: boolean;
+      severity: AlertColor;
+      message: string;
+   }>({
+      open: false,
+      severity: 'success',
+      message: '',
+   });
+
+   const onView = async (params: GridRenderCellParams) => {
+      const id = classListViewModel.classList[params.row.id].id;
+      const classInfo = await classListViewModel.getSingleClass(id);
+      if (classInfo) {
+         setSelectedClass(classInfo);
+         setShowDetail(true);
+      } else {
+         setFeedBackProps({
+            message: 'Không thể lấy dữ liệu vui lòng thử lại sau',
+            open: true,
+            severity: 'error',
+         });
+      }
    };
 
    const onCloseDialog = () => {
@@ -43,7 +65,8 @@ export const ClassList = () => {
 
    const columns = useMemo(() => buildCols(onView), []);
    return (
-      <div style={fullWidthFlex('column', 10)}>
+      <div style={{ position: 'relative', ...fullWidthFlex('column', 10) }}>
+         <Loading open={classListViewModel.loading} />
          <DataGrid
             onPageChange={pageNumberChange}
             onPageSizeChange={pageSizeChange}
@@ -54,6 +77,14 @@ export const ClassList = () => {
             show={showDetail}
             classInfo={selectedClass}
             onClose={onCloseDialog}
+         />
+         <FeedBack
+            message={feedBackProps.message}
+            open={feedBackProps.open}
+            severity={feedBackProps.severity}
+            handleClose={() =>
+               setFeedBackProps({ ...feedBackProps, open: false })
+            }
          />
       </div>
    );

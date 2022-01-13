@@ -6,4 +6,7 @@ export const baseColors = {
    lightBlue: '#49A2FF',
    lightGray: '#e0e0e0',
    white: '#FFFF',
+   red: '#f20707',
+   green: '#0cc40f',
+   purple: '#A050AF',
 };

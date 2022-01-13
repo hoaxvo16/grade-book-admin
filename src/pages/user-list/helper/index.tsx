@@ -14,6 +14,8 @@ export const buildRows = (userList: User[]): GridRowsProp => {
          firstName: user.firstName,
          lastName: user.lastName,
          studentIdentification: user.studentIdentification,
+         isLocked: user.isLocked,
+         isEmailConfirmed: user.isEmailConfirmed,
       };
    });
 
@@ -22,42 +24,54 @@ export const buildRows = (userList: User[]): GridRowsProp => {
 
 export const buildCols = (onView: any, onBlock: any): GridColDef[] => {
    return [
-      { field: 'email', headerName: 'Email', width: 150 },
-      { field: 'firstName', headerName: 'Ten', width: 150 },
-      { field: 'lastName', headerName: 'Ho', width: 150 },
+      { field: 'email', headerName: 'Email', width: 200 },
+      { field: 'firstName', headerName: 'Tên', width: 150 },
+      { field: 'lastName', headerName: 'Họ', width: 150 },
       {
          field: 'studentIdentification',
          headerName: 'MSSV',
-         width: 150,
+         width: 100,
          editable: true,
       },
 
       {
          field: 'view',
-         headerName: 'Xem chi tiet',
+         headerName: 'Xem chi tiết',
          width: 150,
          renderCell: (params: GridRenderCellParams) => {
             return (
                <Button onClick={() => onView(params)} variant="contained">
-                  View
+                  Xem
                </Button>
             );
          },
       },
       {
          field: 'block',
-         headerName: 'Chan',
-         width: 150,
+         headerName: 'Chặn',
+         width: 100,
          renderCell: (params: GridRenderCellParams) => {
-            return (
-               <Button
-                  onClick={() => onBlock(params)}
-                  variant="contained"
-                  color="error"
-               >
-                  Block
-               </Button>
-            );
+            if (params.row.isLocked) {
+               return (
+                  <Button
+                     onClick={() => onBlock(params)}
+                     variant="contained"
+                     color="success"
+                  >
+                     Bỏ chặn
+                  </Button>
+               );
+            } else {
+               return (
+                  <Button
+                     onClick={() => onBlock(params)}
+                     variant="contained"
+                     color="error"
+                  >
+                     Chặn
+                  </Button>
+               );
+            }
          },
       },
    ];

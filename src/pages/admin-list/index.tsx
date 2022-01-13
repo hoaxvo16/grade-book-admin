@@ -34,7 +34,7 @@ const columns: GridColDef[] = [
       headerName: 'Column3',
       width: 150,
       renderCell: (params: GridRenderCellParams) => {
-         return <Button variant="contained">Block</Button>;
+         return <Button variant="contained">Xem</Button>;
       },
    },
 ];
@@ -44,7 +44,7 @@ export const AdminList = () => {
       <div style={fullWidthFlex('column', 10)}>
          <div>
             <Button color="success" variant="outlined" startIcon={<Add />}>
-               Them tai khoan moi
+               Thêm tài khoản mới
             </Button>
          </div>
          <DataGrid rows={rows} columns={columns} />

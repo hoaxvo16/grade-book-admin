@@ -1,5 +1,11 @@
 import { User } from './user';
 
+export class Assignment {
+   id: number = 0;
+   name: string = '';
+   point: number = 0;
+}
+
 export class ClassDetailInfo {
    id: number = 0;
    name: string = '';
@@ -12,4 +18,5 @@ export class ClassDetailInfo {
    isTeacher: boolean = false;
    inviteStringStudent: string = '';
    inviteStringTeacher: string = '';
+   assignments: Assignment[] = [];
 }

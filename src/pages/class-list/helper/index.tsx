@@ -8,13 +8,6 @@ import { ClassDetailInfo } from 'shared/models';
 import { stringToDateDisplay } from 'utils/date';
 
 export const buildRows = (classList: ClassDetailInfo[]): GridRowsProp => {
-   classList.sort((a, b) => {
-      if (a.id > b.id) {
-         return 1;
-      }
-      return -1;
-   });
-
    const renderRow: GridRowsProp = classList.map((classInfo, idx) => {
       return {
          id: idx,
@@ -34,23 +27,23 @@ export const buildRows = (classList: ClassDetailInfo[]): GridRowsProp => {
 export const buildCols = (onView: any): GridColDef[] => {
    return [
       { field: 'classId', headerName: 'ID', width: 50 },
-      { field: 'name', headerName: 'Ten lop', width: 150 },
+      { field: 'name', headerName: 'Tên lớp', width: 250 },
       {
          field: 'startDate',
-         headerName: 'Ngay bat dau',
+         headerName: 'Ngày bắt đầu',
          width: 150,
          type: 'dateTime',
       },
-      { field: 'mainTeacher', headerName: 'Giao vien chinh', width: 150 },
+      { field: 'mainTeacher', headerName: 'Người tạo', width: 150 },
 
       {
          field: 'view',
-         headerName: 'Xem chi tiet',
+         headerName: 'Xem chi tiết',
          width: 150,
          renderCell: (params: GridRenderCellParams) => {
             return (
                <Button onClick={() => onView(params)} variant="contained">
-                  View
+                  Xem
                </Button>
             );
          },

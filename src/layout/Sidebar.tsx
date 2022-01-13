@@ -12,24 +12,24 @@ import { userViewModel } from 'shared/view-models';
 const sideBarItems = [
    {
       icon: <AssignmentInd />,
-      content: 'Danh sach nguoi dung',
+      content: 'Danh sách người dùng',
       path: '/users',
    },
 
    {
       icon: <AdminPanelSettings />,
-      content: 'Danh sach Admin',
+      content: 'Danh sách Admin',
       path: '/admin',
    },
 
    {
       icon: <School />,
-      content: 'Danh sach lop hoc',
+      content: 'Danh sách lớp học',
       path: '/classes',
    },
    {
       icon: <LogoutOutlined />,
-      content: 'Dang xuat',
+      content: 'Đăng xuất',
       path: '/login',
    },
 ];
@@ -59,7 +59,7 @@ export const Sidebar = () => {
                style={idx === selectedId ? { ...item, ...selectedItem } : item}
             >
                {e.icon}
-               <p style={itemTitle}>{e.content}</p>
+               <span style={itemTitle}>{e.content}</span>
             </div>
          ))}
       </div>
