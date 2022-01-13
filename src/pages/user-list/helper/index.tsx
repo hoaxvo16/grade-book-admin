@@ -29,6 +29,7 @@ export const buildCols = (onView: any, onBlock: any): GridColDef[] => {
          field: 'studentIdentification',
          headerName: 'MSSV',
          width: 150,
+         editable: true,
       },
 
       {

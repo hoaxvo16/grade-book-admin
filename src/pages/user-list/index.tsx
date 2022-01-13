@@ -1,4 +1,9 @@
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import {
+   DataGrid,
+   GridCellEditCommitParams,
+   GridCellParams,
+   GridRenderCellParams,
+} from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo, useState } from 'react';
 import { User } from 'shared/models';
@@ -37,6 +42,12 @@ export const UserList = observer(() => {
       setPaging({ ...paging, pageNumber: value });
    };
 
+   const finishEdit = (params: any) => {
+      if (params.formattedValue !== params.value) {
+         console.log(params.value);
+      }
+   };
+
    useEffect(() => {
       userListViewModel.getUserList(paging.pageNumber, paging.numberPerPage);
    }, [paging]);
@@ -50,6 +61,7 @@ export const UserList = observer(() => {
    return (
       <div style={fullWidthFlex('column', 10)}>
          <DataGrid
+            onCellEditCommit={finishEdit}
             onPageChange={pageNumberChange}
             onPageSizeChange={pageSizeChange}
             rows={rows}

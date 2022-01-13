@@ -31,18 +31,16 @@ export const buildRows = (classList: ClassDetailInfo[]): GridRowsProp => {
    return renderRow;
 };
 
-//  "id": 1,
-//             "roleOfCurrentUser": "teacher",
-//             "name": "Web nag cao",
-//             "startDate": "2022-01-03T16:46:07.728",
-//             "room": "F204",
-//             "description": "",
-
 export const buildCols = (onView: any): GridColDef[] => {
    return [
       { field: 'classId', headerName: 'ID', width: 50 },
       { field: 'name', headerName: 'Ten lop', width: 150 },
-      { field: 'startDate', headerName: 'Ngay bat dau', width: 150 },
+      {
+         field: 'startDate',
+         headerName: 'Ngay bat dau',
+         width: 150,
+         type: 'dateTime',
+      },
       { field: 'mainTeacher', headerName: 'Giao vien chinh', width: 150 },
 
       {
