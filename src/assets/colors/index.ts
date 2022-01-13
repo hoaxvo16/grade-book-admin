@@ -4,4 +4,6 @@ export const baseColors = {
    lightDark: '#3C4B64',
    extraLightDark: '#46546C',
    lightBlue: '#49A2FF',
+   lightGray: '#e0e0e0',
+   white: '#FFFF',
 };

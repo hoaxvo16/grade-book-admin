@@ -1,11 +1,10 @@
 import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { userViewModel } from 'shared/view-models';
 
 interface PrivateRouteProps extends RouteProps {
    component?: any;
    children?: any;
 }
-
-let is = true;
 
 export const PrivateRoute = (props: PrivateRouteProps) => {
    const { component: Component, children, ...rest } = props;
@@ -14,7 +13,7 @@ export const PrivateRoute = (props: PrivateRouteProps) => {
       <Route
          {...rest}
          render={routeProps =>
-            is ? (
+            userViewModel.isLogin() ? (
                Component ? (
                   <Component {...routeProps} />
                ) : (

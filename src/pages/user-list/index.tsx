@@ -1,21 +1,65 @@
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useMemo, useState } from 'react';
+import { User } from 'shared/models';
 import { fullWidthFlex } from 'shared/styles';
+import { UserDetail } from './components/user-detail';
+import { buildCols, buildRows } from './helper';
+import { userListViewModel } from './user-list-view-model';
 
-const rows: GridRowsProp = [
-   { id: 1, col1: 'Hello', col2: 'World' },
-   { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-   { id: 3, col1: 'MUI', col2: 'is Amazing' },
-];
+export const UserList = observer(() => {
+   const [showDetail, setShowDetail] = useState(false);
+   const [selectedUser, setSelectedUser] = useState(new User());
 
-const columns: GridColDef[] = [
-   { field: 'col1', headerName: 'Column 1', width: 150 },
-   { field: 'col2', headerName: 'Column 2', width: 150 },
-];
+   const [paging, setPaging] = useState({
+      pageNumber: 1,
+      numberPerPage: 100,
+   });
 
-export const UserList = () => {
+   const onView = (params: GridRenderCellParams) => {
+      setSelectedUser(userListViewModel.userList[params.row.id]);
+      setShowDetail(true);
+   };
+
+   const onBlock = (params: GridRenderCellParams) => {
+      console.log(params);
+   };
+
+   const onCloseDialog = () => {
+      setShowDetail(false);
+   };
+
+   const pageSizeChange = (value: number) => {
+      setPaging({ ...paging, numberPerPage: value });
+   };
+
+   const pageNumberChange = (value: number) => {
+      setPaging({ ...paging, pageNumber: value });
+   };
+
+   useEffect(() => {
+      userListViewModel.getUserList(paging.pageNumber, paging.numberPerPage);
+   }, [paging]);
+
+   const rows = useMemo(
+      () => buildRows(userListViewModel.userList),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [userListViewModel.dataVersion]
+   );
+   const columns = useMemo(() => buildCols(onView, onBlock), []);
    return (
-      <div style={fullWidthFlex('column')}>
-         <DataGrid rows={rows} columns={columns} />
+      <div style={fullWidthFlex('column', 10)}>
+         <DataGrid
+            onPageChange={pageNumberChange}
+            onPageSizeChange={pageSizeChange}
+            rows={rows}
+            columns={columns}
+         />
+         <UserDetail
+            onClose={onCloseDialog}
+            user={selectedUser}
+            show={showDetail}
+         />
       </div>
    );
-};
+});

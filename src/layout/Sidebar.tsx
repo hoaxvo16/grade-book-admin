@@ -1,7 +1,13 @@
-import { AssignmentInd, School, Settings } from '@mui/icons-material';
+import {
+   AdminPanelSettings,
+   AssignmentInd,
+   LogoutOutlined,
+   School,
+} from '@mui/icons-material';
 import { baseColors } from 'assets/colors';
 import { CSSProperties, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { userViewModel } from 'shared/view-models';
 
 const sideBarItems = [
    {
@@ -11,15 +17,20 @@ const sideBarItems = [
    },
 
    {
-      icon: <School />,
-      content: 'Danh sach lop hoc',
-      path: 'classes',
+      icon: <AdminPanelSettings />,
+      content: 'Danh sach Admin',
+      path: '/admin',
    },
 
    {
-      icon: <Settings />,
-      content: 'Cai dat',
-      path: 'setting',
+      icon: <School />,
+      content: 'Danh sach lop hoc',
+      path: '/classes',
+   },
+   {
+      icon: <LogoutOutlined />,
+      content: 'Dang xuat',
+      path: '/login',
    },
 ];
 
@@ -30,6 +41,9 @@ export const Sidebar = () => {
 
    const { sideBar, item, itemTitle, header, selectedItem } = makeStyles();
    const onClickItem = (path: string) => {
+      if (path === '/login') {
+         userViewModel.logout();
+      }
       history.push(path);
    };
    return (

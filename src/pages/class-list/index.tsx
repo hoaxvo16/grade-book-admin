@@ -1,25 +1,60 @@
-import { Button } from '@mui/material';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { useEffect, useMemo, useState } from 'react';
+import { ClassDetailInfo } from 'shared/models';
 import { fullWidthFlex } from 'shared/styles';
-
-const rows: GridRowsProp = [
-   { id: 1, col1: 'Hello', col2: 'World' },
-   { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-   { id: 3, col1: 'MUI', col2: 'is Amazing' },
-];
-
-const columns: GridColDef[] = [
-   { field: 'col1', headerName: 'Column 1', width: 150 },
-   { field: 'col2', headerName: 'Column 2', width: 150 },
-];
+import { classListViewModel } from './class-list-view-model';
+import { ClassDetail } from './components/class-detail';
+import { buildCols, buildRows } from './helper';
 
 export const ClassList = () => {
+   const [showDetail, setShowDetail] = useState(false);
+   const [selectedClass, setSelectedClass] = useState(new ClassDetailInfo());
+   const [paging, setPaging] = useState({
+      pageNumber: 1,
+      numberPerPage: 100,
+   });
+
+   const onView = (params: GridRenderCellParams) => {
+      setSelectedClass(classListViewModel.classList[params.row.id]);
+      setShowDetail(true);
+   };
+
+   const onCloseDialog = () => {
+      setShowDetail(false);
+   };
+
+   const pageSizeChange = (value: number) => {
+      setPaging({ ...paging, numberPerPage: value });
+   };
+
+   const pageNumberChange = (value: number) => {
+      setPaging({ ...paging, pageNumber: value });
+   };
+
+   useEffect(() => {
+      classListViewModel.getClassList(paging.pageNumber, paging.numberPerPage);
+   }, [paging]);
+
+   const rows = useMemo(
+      () => buildRows(classListViewModel.classList),
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      [classListViewModel.dataVersion]
+   );
+
+   const columns = useMemo(() => buildCols(onView), []);
    return (
-      <div style={fullWidthFlex('column')}>
-         <div>
-            <Button>Action</Button>
-         </div>
-         <DataGrid rows={rows} columns={columns} />
+      <div style={fullWidthFlex('column', 10)}>
+         <DataGrid
+            onPageChange={pageNumberChange}
+            onPageSizeChange={pageSizeChange}
+            rows={rows}
+            columns={columns}
+         />
+         <ClassDetail
+            show={showDetail}
+            classInfo={selectedClass}
+            onClose={onCloseDialog}
+         />
       </div>
    );
 };
