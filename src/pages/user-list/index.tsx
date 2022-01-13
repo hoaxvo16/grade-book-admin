@@ -83,7 +83,7 @@ export const UserList = observer(() => {
 
    const onCloseModal = (type: 'confirm' | 'cancel') => {
       setShowModal({ ...showModal, open: false });
-      setShowDetail(false);
+
       if (type === 'confirm') {
       } else {
       }
