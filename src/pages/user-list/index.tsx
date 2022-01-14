@@ -1,7 +1,7 @@
 import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo, useState } from 'react';
-import { ConfirmModal } from 'shared/components';
+import { ConfirmModal, Loading } from 'shared/components';
 import { User } from 'shared/models';
 import { fullWidthFlex } from 'shared/styles';
 import { UserDetail } from './components/user-detail';
@@ -16,6 +16,10 @@ export const UserList = observer(() => {
       title: '',
    });
    const [selectedUser, setSelectedUser] = useState(new User());
+   const [userLock, setUserLocked] = useState({
+      id: 0,
+      isLocked: false,
+   });
 
    const [paging, setPaging] = useState({
       pageNumber: 1,
@@ -32,6 +36,10 @@ export const UserList = observer(() => {
    };
 
    const onBlock = (params: GridRenderCellParams) => {
+      setUserLocked({
+         id: params.row.userId,
+         isLocked: params.row.isLocked,
+      });
       if (params.row.isLocked) {
          setShowModal({
             open: true,
@@ -48,6 +56,10 @@ export const UserList = observer(() => {
    };
 
    const onBlockFromDetail = () => {
+      setUserLocked({
+         id: selectedUser.id,
+         isLocked: selectedUser.isLocked,
+      });
       if (selectedUser.isLocked) {
          setShowModal({
             open: true,
@@ -85,6 +97,8 @@ export const UserList = observer(() => {
       setShowModal({ ...showModal, open: false });
 
       if (type === 'confirm') {
+         setShowDetail(false);
+         userListViewModel.toggleLockUser(userLock.id, !userLock.isLocked);
       } else {
       }
    };
@@ -97,6 +111,7 @@ export const UserList = observer(() => {
    const columns = useMemo(() => buildCols(onView, onBlock), []);
    return (
       <div style={fullWidthFlex('column', 10)}>
+         <Loading open={userListViewModel.loading} />
          <DataGrid
             components={{
                Toolbar: GridToolbar,

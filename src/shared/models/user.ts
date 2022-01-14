@@ -1,4 +1,5 @@
 export class User {
+   id: number = 0;
    role: 'TEACHER' | 'STUDENT' | null = null;
    email: string = '';
    firstName: string = '';
@@ -24,6 +25,7 @@ export class User {
       temp.isPasswordNotSet = user.isPasswordNotSet;
       temp.isLocked = user.isLocked;
       temp.isEmailConfirmed = user.isEmailConfirmed;
+      temp.id = user.id;
       return temp;
    }
 }

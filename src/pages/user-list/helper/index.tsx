@@ -10,6 +10,7 @@ export const buildRows = (userList: User[]): GridRowsProp => {
    const renderRow: GridRowsProp = userList.map((user, idx) => {
       return {
          id: idx,
+         userId: user.id,
          email: user.email,
          firstName: user.firstName,
          lastName: user.lastName,
