@@ -25,11 +25,11 @@ export const ClassInfo = ({ classInfo }: TabProps) => {
          </p>
          <p>
             <b>Số sinh viên: </b>
-            <span>{0}</span>
+            <span>{classInfo.students.length}</span>
          </p>
          <p>
             <b>Số giáo viên: </b>
-            <span>{0}</span>
+            <span>{classInfo.subTeachers.length + 1}</span>
          </p>
       </div>
    );

@@ -53,7 +53,8 @@ class ClassListViewModel extends BaseViewModel {
    async getSingleClass(classId: number) {
       this.startLoading();
       const res: ClassDetailInfo | HttpError = await httpService.sendGet(
-         `/AdminApi/class/${classId}`
+         `/AdminApi/class/${classId}`,
+         httpService.getBearerToken()
       );
 
       this.stopLoading();

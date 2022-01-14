@@ -5,7 +5,7 @@ import { TabProps } from './interface';
 export const ClassAssignment = ({ classInfo }: TabProps) => {
    return (
       <div style={{ height: 400, overflow: 'auto', paddingTop: 20 }}>
-         {jsons.map(item => (
+         {classInfo.assignments.map(item => (
             <div
                key={item.id}
                style={{
@@ -31,19 +31,9 @@ export const ClassAssignment = ({ classInfo }: TabProps) => {
                </span>
             </div>
          ))}
+         {classInfo.assignments.length === 0 && (
+            <p>Chưa có cột điểm nào được tạo</p>
+         )}
       </div>
    );
 };
-
-const jsons = [
-   {
-      id: 2,
-      name: 'Cuoi ki',
-      point: 20,
-   },
-   {
-      id: 1,
-      name: 'Giua ki',
-      point: 100,
-   },
-];

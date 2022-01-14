@@ -1,5 +1,5 @@
 import { AlertColor } from '@mui/material';
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { useEffect, useMemo, useState } from 'react';
 import { FeedBack, Loading } from 'shared/components';
 import { ClassDetailInfo } from 'shared/models';
@@ -68,6 +68,9 @@ export const ClassList = () => {
       <div style={{ position: 'relative', ...fullWidthFlex('column', 10) }}>
          <Loading open={classListViewModel.loading} />
          <DataGrid
+            components={{
+               Toolbar: GridToolbar,
+            }}
             onPageChange={pageNumberChange}
             onPageSizeChange={pageSizeChange}
             rows={rows}

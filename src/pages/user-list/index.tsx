@@ -1,4 +1,4 @@
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo, useState } from 'react';
 import { ConfirmModal } from 'shared/components';
@@ -98,6 +98,9 @@ export const UserList = observer(() => {
    return (
       <div style={fullWidthFlex('column', 10)}>
          <DataGrid
+            components={{
+               Toolbar: GridToolbar,
+            }}
             onCellEditCommit={finishEdit}
             onPageChange={pageNumberChange}
             onPageSizeChange={pageSizeChange}

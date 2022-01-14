@@ -1,45 +1,10 @@
 import { Add } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import {
-   DataGrid,
-   GridRowsProp,
-   GridColDef,
-   GridRenderCellParams,
-} from '@mui/x-data-grid';
-import { useState } from 'react';
+import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
+import { useMemo, useState } from 'react';
 import { fullWidthFlex } from 'shared/styles';
 import { AdminCreateForm } from './components/admin-create-form';
-
-const rows: GridRowsProp = [
-   {
-      id: 1,
-      col1: 'Hello',
-      col2: 'World',
-   },
-   {
-      id: 2,
-      col1: 'DataGridPro',
-      col2: 'is Awesome',
-   },
-   {
-      id: 3,
-      col1: 'MUI',
-      col2: 'is Amazing',
-   },
-];
-
-const columns: GridColDef[] = [
-   { field: 'col1', headerName: 'Column 1', width: 150 },
-   { field: 'col2', headerName: 'Column 2', width: 150 },
-   {
-      field: 'col3',
-      headerName: 'Column3',
-      width: 150,
-      renderCell: (params: GridRenderCellParams) => {
-         return <Button variant="contained">Xem</Button>;
-      },
-   },
-];
+import { buildCols, buildRows } from './helper';
 
 export const AdminList = () => {
    const [showForm, setShowForm] = useState(false);
@@ -52,6 +17,12 @@ export const AdminList = () => {
       console.log(username, password, isSuperAdmin);
       setShowForm(false);
    };
+
+   const onView = (params: GridRenderCellParams) => {};
+
+   const rows = useMemo(() => buildRows(), []);
+
+   const columns = useMemo(() => buildCols(onView), []);
    return (
       <div style={fullWidthFlex('column', 10)}>
          <div>
@@ -64,7 +35,13 @@ export const AdminList = () => {
                Thêm tài khoản mới
             </Button>
          </div>
-         <DataGrid rows={rows} columns={columns} />
+         <DataGrid
+            components={{
+               Toolbar: GridToolbar,
+            }}
+            rows={rows}
+            columns={columns}
+         />
          <AdminCreateForm
             open={showForm}
             onClose={() => setShowForm(false)}

@@ -14,7 +14,13 @@ export const ClassMember = ({ classInfo }: TabProps) => {
             Giáo viên
             <Person />
          </h3>
-         {users.map((user, idx) => (
+         <div style={{ paddingBottom: 20, ...centerHorizontal }}>
+            <Avatar user={classInfo.mainTeacher} />
+            <span
+               style={{ marginLeft: 10 }}
+            >{`${classInfo.mainTeacher.lastName} ${classInfo.mainTeacher.firstName}`}</span>
+         </div>
+         {classInfo.subTeachers.map((user, idx) => (
             <div key={idx} style={{ paddingBottom: 20, ...centerHorizontal }}>
                <Avatar user={user} />
                <span
@@ -26,7 +32,7 @@ export const ClassMember = ({ classInfo }: TabProps) => {
             Sinh viên
             <Person fontSize="medium" />
          </h3>
-         {users.map((user, idx) => (
+         {classInfo.students.map((user, idx) => (
             <div key={idx} style={{ paddingBottom: 20, ...centerHorizontal }}>
                <Avatar user={user} />
                <span
@@ -34,6 +40,7 @@ export const ClassMember = ({ classInfo }: TabProps) => {
                >{`${user.lastName} ${user.firstName}`}</span>
             </div>
          ))}
+         {classInfo.students.length === 0 && <p>Lớp học chưa có sinh viên</p>}
       </div>
    );
 };
@@ -48,32 +55,3 @@ const makeStyles = () => {
 
    return { pStyle };
 };
-
-let users: User[] = [];
-
-const user1 = new User();
-
-user1.firstName = 'Hoa';
-
-user1.lastName = 'Vo Xuan';
-
-user1.profilePictureUrl =
-   'https://lh3.googleusercontent.com/a-/AOh14GjpOMaar9UtSDsvtKG74PzXm6yLiJ72Ua1HdoMCUg=s96-c';
-const user2 = new User();
-
-user2.firstName = 'Hoa';
-
-user2.lastName = 'Vo Xuan';
-
-user2.profilePictureUrl =
-   'https://lh3.googleusercontent.com/a-/AOh14GjpOMaar9UtSDsvtKG74PzXm6yLiJ72Ua1HdoMCUg=s96-c';
-const user3 = new User();
-
-user3.firstName = 'Hoa';
-
-user3.lastName = 'Vo Xuan';
-
-user3.profilePictureUrl =
-   'https://lh3.googleusercontent.com/a-/AOh14GjpOMaar9UtSDsvtKG74PzXm6yLiJ72Ua1HdoMCUg=s96-c';
-
-users = [user1, user2, user3, user1, user2];
