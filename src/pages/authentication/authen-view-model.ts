@@ -1,15 +1,13 @@
 import { AuthenError, HttpError } from 'shared/errors';
 import { TOKEN_KEY } from 'shared/constants';
-import { UserAuthen, UserResponse, UserStore } from 'shared/types';
+import { UserAuthen, UserResponse } from 'shared/types';
 import { httpService, cryptoService, storageService } from 'shared/services';
 import { BaseViewModel, userViewModel } from 'shared/view-models';
 
-type AuthenType = 'login' | 'register' | 'google';
 class LoginViewModel extends BaseViewModel {
-   async authenUser(user: UserAuthen, type: AuthenType) {
-      let url = '/Authentication';
-      if (type === 'register') url = '/Authentication/register';
-      else if (type === 'google') url = '/Authentication/google';
+   async authenUser(user: UserAuthen) {
+      let url = '/AdminApi/authentication';
+
       storageService.clearUser();
       this.startLoading();
 
@@ -28,24 +26,10 @@ class LoginViewModel extends BaseViewModel {
       }
    }
 
-   getRememberUser(response: UserResponse): UserStore {
-      return {
-         firstName: response.firstName,
-         lastName: response.lastName,
-         email: response.email,
-         defaultProfilePictureHex: response.defaultProfilePictureHex,
-         profilePictureUrl: response.profilePictureUrl,
-         displayName: response.lastName + ' ' + response.firstName,
-         isPasswordNotSet: response.isPasswordNotSet,
-         studentIdentification: response.studentIdentification,
-      };
-   }
-
    storeUser(response: UserResponse) {
-      const rememberUser = this.getRememberUser(response);
       const encryptToken = cryptoService.encrypt(response.token);
       storageService.setLocalStorage(TOKEN_KEY, encryptToken);
-      userViewModel.updateUser(rememberUser);
+      userViewModel.updateUser(response.admin);
    }
 
    handleError(response: HttpError) {

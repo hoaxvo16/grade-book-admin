@@ -25,7 +25,7 @@ export const ConfirmModal = ({ open, onClose, message, title }: IProps) => {
                </Button>
                <Button
                   variant="contained"
-                  onClick={() => onClose('confirm')}
+                  onClick={() => onClose('cancel')}
                   color="error"
                >
                   Hủy

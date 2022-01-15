@@ -26,6 +26,9 @@ export const ClassList = () => {
       message: '',
    });
 
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   const trigger = classListViewModel.dataVersion;
+
    const onView = async (params: GridRenderCellParams) => {
       const id = classListViewModel.classList[params.row.id].id;
       const classInfo = await classListViewModel.getSingleClass(id);

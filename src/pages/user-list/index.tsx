@@ -1,7 +1,7 @@
 import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo, useState } from 'react';
-import { ConfirmModal, Loading } from 'shared/components';
+import { ConfirmModal, FeedBack, Loading } from 'shared/components';
 import { User } from 'shared/models';
 import { fullWidthFlex } from 'shared/styles';
 import { UserDetail } from './components/user-detail';
@@ -103,6 +103,9 @@ export const UserList = observer(() => {
       }
    };
 
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   const trigger = userListViewModel.dataVersion;
+
    const rows = useMemo(
       () => buildRows(userListViewModel.userList),
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -110,7 +113,7 @@ export const UserList = observer(() => {
    );
    const columns = useMemo(() => buildCols(onView, onBlock), []);
    return (
-      <div style={fullWidthFlex('column', 10)}>
+      <div style={{ position: 'relative', ...fullWidthFlex('column', 10) }}>
          <Loading open={userListViewModel.loading} />
          <DataGrid
             components={{
@@ -133,6 +136,12 @@ export const UserList = observer(() => {
             open={showModal.open}
             message={showModal.message}
             onClose={onCloseModal}
+         />
+         <FeedBack
+            message={userListViewModel.message}
+            open={userListViewModel.isError}
+            severity="error"
+            handleClose={() => userListViewModel.deleteError()}
          />
       </div>
    );

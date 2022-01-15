@@ -1,5 +1,5 @@
 import { HttpError } from './http-error';
-export class AuthenError extends HttpError {
+export class AdminListError extends HttpError {
    constructor(error: HttpError) {
       super();
       this.message = error.getMessage();
@@ -7,8 +7,8 @@ export class AuthenError extends HttpError {
    }
 
    getMessage(): string {
-      if (this.message.includes('does not exist')) {
-         return 'Người này chưa có tài khoản trong hệ thống';
+      if (this.message.includes('existed')) {
+         return 'Tên người dùng đã tồn tại';
       }
       switch (this.message) {
          case 'Wrong credential':

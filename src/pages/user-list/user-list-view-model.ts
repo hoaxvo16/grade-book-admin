@@ -28,7 +28,6 @@ class UserListViewModel extends BaseViewModel {
    }
 
    async toggleLockUser(id: number, value: boolean) {
-      console.log(id, value);
       this.startLoading();
       const res: HttpError | any = await httpService.sendPut(
          `/AdminApi/user/${id}/lockState`,
@@ -37,6 +36,7 @@ class UserListViewModel extends BaseViewModel {
       );
 
       if (res instanceof HttpError) {
+         console.log('make error');
          this.makeError('Không thực hiện được hành động vui lòng thử lại sau');
       } else {
          await this.getUserList(this.pageNumber, this.pageSize);

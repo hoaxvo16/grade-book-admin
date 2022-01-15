@@ -9,6 +9,7 @@ class ClassListViewModel extends BaseViewModel {
    dataVersion: number = 0;
 
    pageNumber: number = 1;
+   pageSize: number = 100;
 
    constructor() {
       super();
@@ -34,6 +35,7 @@ class ClassListViewModel extends BaseViewModel {
    }
 
    async getClassList(pageNumber: number, pageSize: number) {
+      this.pageSize = pageSize;
       this.startLoading();
       if (pageNumber !== this.pageNumber) {
          this.pageNumber = pageNumber;

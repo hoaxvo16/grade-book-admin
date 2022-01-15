@@ -1,30 +1,21 @@
+import { Admin } from 'shared/models';
 export type UserAuthen = {
-  email?: string;
-  password: string;
-  firstName?: string;
-  lastName?: string;
-  profilePictureUrl?: string;
-  defaultProfilePictureHex?: string;
+   username?: string;
+   password: string;
 };
 
 export type UserResponse = {
-  defaultProfilePictureHex: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profilePictureUrl: string;
-  token: string;
-  studentIdentification: string;
-  isPasswordNotSet: boolean;
+   admin: Admin;
+   token: string;
 };
 
 export type UserStore = {
-  defaultProfilePictureHex: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profilePictureUrl: string;
-  displayName: string;
-  isPasswordNotSet: boolean;
-  studentIdentification: string;
+   defaultProfilePictureHex: string;
+   email: string;
+   firstName: string;
+   lastName: string;
+   profilePictureUrl: string;
+   displayName: string;
+   isPasswordNotSet: boolean;
+   studentIdentification: string;
 };

@@ -5,6 +5,7 @@ import {
    School,
 } from '@mui/icons-material';
 import { baseColors } from 'assets/colors';
+import { observer } from 'mobx-react-lite';
 import { CSSProperties, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { userViewModel } from 'shared/view-models';
@@ -14,12 +15,6 @@ const sideBarItems = [
       icon: <AssignmentInd />,
       content: 'Danh sách người dùng',
       path: '/users',
-   },
-
-   {
-      icon: <AdminPanelSettings />,
-      content: 'Danh sách Admin',
-      path: '/admin',
    },
 
    {
@@ -34,7 +29,7 @@ const sideBarItems = [
    },
 ];
 
-export const Sidebar = () => {
+export const Sidebar = observer(() => {
    const [selectedId, setSelectedId] = useState(0);
 
    const history = useHistory();
@@ -49,14 +44,29 @@ export const Sidebar = () => {
    return (
       <div style={sideBar}>
          <div style={header}>Dashboard</div>
+         {userViewModel.user.isSuperAdmin && (
+            <div
+               onClick={() => {
+                  onClickItem('/admin');
+                  setSelectedId(0);
+               }}
+               style={selectedId === 0 ? { ...item, ...selectedItem } : item}
+            >
+               <AdminPanelSettings />
+               <span style={itemTitle}>Danh sách Admin</span>
+            </div>
+         )}
+
          {sideBarItems.map((e, idx) => (
             <div
-               key={idx}
+               key={idx + 1}
                onClick={() => {
                   onClickItem(e.path);
-                  setSelectedId(idx);
+                  setSelectedId(idx + 1);
                }}
-               style={idx === selectedId ? { ...item, ...selectedItem } : item}
+               style={
+                  idx + 1 === selectedId ? { ...item, ...selectedItem } : item
+               }
             >
                {e.icon}
                <span style={itemTitle}>{e.content}</span>
@@ -64,7 +74,7 @@ export const Sidebar = () => {
          ))}
       </div>
    );
-};
+});
 
 const makeStyles = () => {
    const sideBar: CSSProperties = {
