@@ -6,7 +6,7 @@ import {
 } from '@mui/icons-material';
 import { baseColors } from 'assets/colors';
 import { observer } from 'mobx-react-lite';
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { userViewModel } from 'shared/view-models';
 
@@ -41,6 +41,14 @@ export const Sidebar = observer(() => {
       }
       history.push(path);
    };
+   useEffect(() => {
+      if (userViewModel.user.isSuperAdmin) {
+         setSelectedId(0);
+      } else {
+         setSelectedId(1);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [userViewModel.user]);
    return (
       <div style={sideBar}>
          <div style={header}>Dashboard</div>

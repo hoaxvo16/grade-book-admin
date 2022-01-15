@@ -14,8 +14,13 @@ export const Authentication = () => {
       };
 
       const result = await loginViewModel.authenUser(user);
+
       if (result) {
-         history.push('/users');
+         if (result.admin.isSuperAdmin) {
+            history.push('/admin');
+         } else {
+            history.push('/users');
+         }
       }
    };
    return (

@@ -19,10 +19,10 @@ class LoginViewModel extends BaseViewModel {
       this.stopLoading();
       if (response instanceof HttpError) {
          this.handleError(response);
-         return false;
+         return null;
       } else {
          this.storeUser(response);
-         return true;
+         return response;
       }
    }
 
