@@ -31,7 +31,10 @@ export const UserList = observer(() => {
    }, [paging]);
 
    const onView = (params: GridRenderCellParams) => {
-      setSelectedUser(userListViewModel.userList[params.row.id]);
+      const findUser = userListViewModel.userList.find(
+         user => user.id === params.row.userId
+      );
+      if (findUser) setSelectedUser(findUser);
       setShowDetail(true);
    };
 
