@@ -37,7 +37,6 @@ class UserListViewModel extends BaseViewModel {
       );
 
       if (res instanceof HttpError) {
-         console.log('make error');
          this.makeError('Không thực hiện được hành động vui lòng thử lại sau');
       } else {
          await this.getUserList(this.pageNumber, this.pageSize);
