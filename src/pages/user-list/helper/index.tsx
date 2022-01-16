@@ -5,16 +5,18 @@ import {
    GridRowsProp,
 } from '@mui/x-data-grid';
 import { User } from 'shared/models';
+import { stringToDateDisplay } from 'utils/date';
 
 export const buildRows = (userList: User[]): GridRowsProp => {
    const renderRow: GridRowsProp = userList.map((user, idx) => {
       return {
-         id: idx,
+         id: user.id,
          userId: user.id,
          email: user.email,
          firstName: user.firstName,
          lastName: user.lastName,
          studentIdentification: user.studentIdentification,
+         dateCreated: stringToDateDisplay(user.dateCreated),
          isLocked: user.isLocked,
          isEmailConfirmed: user.isEmailConfirmed,
       };
@@ -25,6 +27,7 @@ export const buildRows = (userList: User[]): GridRowsProp => {
 
 export const buildCols = (onView: any, onBlock: any): GridColDef[] => {
    return [
+      { field: 'userId', headerName: 'ID', width: 200 },
       { field: 'email', headerName: 'Email', width: 200 },
       { field: 'firstName', headerName: 'Tên', width: 150 },
       { field: 'lastName', headerName: 'Họ', width: 150 },
@@ -33,6 +36,12 @@ export const buildCols = (onView: any, onBlock: any): GridColDef[] => {
          headerName: 'MSSV',
          width: 100,
          editable: true,
+      },
+      {
+         field: 'dateCreated',
+         headerName: 'Ngày tạo',
+         width: 150,
+         type: 'dateTime',
       },
 
       {

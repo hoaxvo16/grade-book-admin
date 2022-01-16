@@ -1,3 +1,4 @@
+import { UserListError } from './user-list-error';
 import { AdminListError } from './admin-list-error';
 import { AuthenError } from './authen-error';
 import { HomepageError } from './homepage-error';
@@ -11,4 +12,5 @@ export {
    InvitationError,
    ProfileError,
    AdminListError,
+   UserListError,
 };

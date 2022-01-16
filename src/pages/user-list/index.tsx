@@ -89,7 +89,11 @@ export const UserList = observer(() => {
 
    const finishEdit = (params: any) => {
       if (params.formattedValue !== params.value) {
-         console.log(params.value);
+         if (params.value.trim() === '') {
+            userListViewModel.makeError('MSSV trống');
+         } else {
+            userListViewModel.changeStudentId(params.id, params.value);
+         }
       }
    };
 

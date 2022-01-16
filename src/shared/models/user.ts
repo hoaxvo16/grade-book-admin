@@ -12,6 +12,8 @@ export class User {
    isLocked: boolean = false;
    isEmailConfirmed: boolean = true;
 
+   dateCreated: string = '';
+
    static map(user: User) {
       const temp = new User();
       temp.defaultProfilePictureHex = user.defaultProfilePictureHex;
@@ -26,6 +28,7 @@ export class User {
       temp.isLocked = user.isLocked;
       temp.isEmailConfirmed = user.isEmailConfirmed;
       temp.id = user.id;
+      temp.dateCreated = user.dateCreated;
       return temp;
    }
 }

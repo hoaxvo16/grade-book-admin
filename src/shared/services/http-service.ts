@@ -18,7 +18,6 @@ class HttpService {
    }
 
    async sendPost(url: string, body: any, token?: string) {
-      console.log(BASE_URL);
       try {
          const response = await axios.post(
             `${BASE_URL}${url}`,
@@ -64,7 +63,7 @@ class HttpService {
    getBearerToken() {
       const token = storageService.getLocalStorage(TOKEN_KEY);
       const decryptToken = cryptoService.decrypt(token || '');
-      console.log(decryptToken);
+
       return `Bearer ${decryptToken}`;
    }
 

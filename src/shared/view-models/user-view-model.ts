@@ -21,7 +21,6 @@ class UserViewModel extends BaseViewModel {
    }
 
    updateUser(user: Admin) {
-      console.log('update user');
       this.user = user;
       storageService.setSessionStorage('info', JSON.stringify(user));
    }

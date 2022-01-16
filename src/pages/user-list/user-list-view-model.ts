@@ -1,3 +1,4 @@
+import { UserListError } from './../../shared/errors/user-list-error';
 import { BaseViewModel } from 'shared/view-models';
 import { httpService } from 'shared/services';
 import { HttpError } from 'shared/errors';
@@ -61,6 +62,24 @@ class UserListViewModel extends BaseViewModel {
       } else {
          this.updateUserList(res.users);
       }
+   }
+
+   async changeStudentId(userId: number, studentId: string) {
+      this.startLoading();
+      const res = await httpService.sendPut(
+         `/AdminApi/user/${userId}/studentIdentification`,
+         {
+            newStudentIdentification: studentId,
+         },
+         httpService.getBearerToken()
+      );
+      if (res instanceof HttpError) {
+         const error = new UserListError(res);
+         this.makeError(error.getMessage());
+      } else {
+         this.getUserList(this.pageNumber, this.pageSize);
+      }
+      this.stopLoading();
    }
 }
 
