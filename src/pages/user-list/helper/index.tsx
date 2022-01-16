@@ -27,7 +27,7 @@ export const buildRows = (userList: User[]): GridRowsProp => {
 
 export const buildCols = (onView: any, onBlock: any): GridColDef[] => {
    return [
-      { field: 'userId', headerName: 'ID', width: 200 },
+      { field: 'userId', headerName: 'ID', width: 50 },
       { field: 'email', headerName: 'Email', width: 200 },
       { field: 'firstName', headerName: 'Tên', width: 150 },
       { field: 'lastName', headerName: 'Họ', width: 150 },
