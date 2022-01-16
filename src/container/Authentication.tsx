@@ -14,7 +14,7 @@ export const Authentication = ({ children }: any) => {
          history.push('/users');
       }
    } else {
-      userViewModel.logout();
+      history.push('/login');
    }
 
    return children;
